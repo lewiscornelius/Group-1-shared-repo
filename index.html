@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Weather Vibes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+    <!-- Search bar to find current location -->
+    <section id="search">
+    </section>
+
+    <section id="weather-container">
+        <!-- Current tempeture within the weather container -->
+        <div id="curentTemp">
+        </div>
+        <!-- Current weather condition e.i. sunny, cloudy, rainy-->
+        <div id="currentWeather">
+        </div>
+        <!-- Cards for the seven day weather coditions -->
+        <div id="sevenDayContainer">
+            <card id="sun"></card>
+            <card id="mon"></card>
+            <card id="tues"></card>
+            <card id="wed"></card>
+            <card id="thur"></card>
+            <card id="fri"></card>
+            <card id="sat"></card>
+        </div>
+    </section>
+
+    <!-- Soundcloud -->
+    <section id="soundCloud">
+        <div id="wdiget">
+            <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+            src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/playlists/1491697009"> 
+          </iframe>
+          <!-- above in the src the numbers after 'playlists' is the selected playlist -->
+        </div>
+    </section>
+  </body>
+</html>
