@@ -34,5 +34,3 @@ fetch("https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/xml
        console.log(data);
    });
   
-
-}
