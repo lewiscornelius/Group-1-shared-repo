@@ -1,7 +1,7 @@
 var sevenDayForecast = document.querySelector('sevenDayContainer');
 
 
-function weatherForecast() {
+function currentWeatherForecast() {
  fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
 
 .then(function (response) {
@@ -11,12 +11,13 @@ function weatherForecast() {
         this.displayWeather(data);
     })
 
-
- fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
+}
+function sevenDayForecast(){
+fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
 .then(function (response) {
-    return response.json();
+   return response.json();
 })
-    .then(function (data) {
-        console.log(data)
-    });
- }
+   .then(function (data) {
+       console.log(data)
+   });
+}
