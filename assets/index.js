@@ -2,22 +2,35 @@ var sevenDayForecast = document.querySelector('sevenDayContainer');
 
 
 function currentWeatherForecast() {
- fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
+    fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
 
-.then(function (response) {
-    return response.json();
-})
-    .then(function (data) {
-        this.displayWeather(data);
-    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            this.displayWeather(data);
+        })
 
 }
-function sevenDayForecast(){
-fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
-.then(function (response) {
-   return response.json();
-})
-   .then(function (data) {
-       console.log(data)
-   });
+function sevenDayForecast() {
+    fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data)
+        });
+}
+
+function search() {
+    this.sevenDayForecast(document.querySelector('.input').value);
+};
+
+document.querySelector('.input').addEventListener('keyup', function (event)) {
+    if (event.key == 'Enter') {
+        sevenDayForecast.search();
+        document.querySelector('.input').value;
+        sevenDayForecast(document.querySelector('.input').value);
+    }
+    document.querySelector('.input').
 }
