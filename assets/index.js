@@ -6,8 +6,7 @@ var currentWeatherEl = document.querySelector('#currentWeather');
 locationValue.addEventListener("keyup", function(event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
     if (event.key === "Enter") {
-        // Call the handleSearch function when Enter key is pressed
-        handleSearch();
+       
         var locationValue = document.getElementById("locationValue");
         var city = locationValue.value;
 
