@@ -33,7 +33,10 @@ function searchInput() {
 
 document.querySelector(".input").addEventListener("keydown", function (event) { 
     if (event.key == "Enter") {
-        sevenDayForecast.search(event);
+        // sevenDayForecast.search(event);
+        searchMap();
+        city = document.querySelector(".input").value;
+        console.log(city);
     }document.querySelector(".input").value });
 
 
