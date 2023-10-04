@@ -24,19 +24,18 @@ fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc88582356512
 
 }
 
-// Initialize the map
-var map = L.map('map').setView([0, 0], 13); // Set initial coordinates and zoom level
+// // Initialize the map
+window.onload = function() {
+    L.map('mapid', {
+      layers: MQ.mapLayer(),
+      center: [ 40.731701, -73.993411 ],
+      zoom: 12
+    });
+  };
 
-// Create a MapQuest tile layer
-L.tileLayer('https://open.mapquestapi.com/tiles/layer/{mapId}/{z}/{x}/{y}.png?key=gUgK3zuO2juaY9exckXhIafpgj38trkj', {
-    attribution: '© <a href="https://www.mapquest.com/">MapQuest</a>',
-    maxZoom: 18,
-    style: 'osm' // You can choose a different style here
-}).addTo(map);
-
+//This function needs to be ran on search
 // Function to perform the map search
 function searchMap() {
-
     // Use MapQuest's free geocoding API to convert the location to coordinates
     fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=gUgK3zuO2juaY9exckXhIafpgj38trkj&location=${city}`)
         .then(response => response.json())
