@@ -2,6 +2,7 @@ var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
 var currentTempEl = document.querySelector('#currentTemp');
 var currentWeatherEl = document.querySelector('#currentWeather');
 
+<<<<<<< HEAD
 
 
 locationInput.addEventListener("keyup", function(event) {
@@ -11,6 +12,9 @@ locationInput.addEventListener("keyup", function(event) {
         handleSearch();
         var locationValue = document.getElementById("locationValue");
         var city = locationValue.value;
+=======
+var city = document.getElementById("locationValue");
+>>>>>>> 7d5541d1e42935e1f76a9e7fe9fd4054d439b366
 
 
 function currentWeatherForecast() {
@@ -89,5 +93,15 @@ function searchMap() {
         });
     }
 
+<<<<<<< HEAD
 }
     });
+=======
+    locationInput.addEventListener("keyup", function(event) {
+        // Check if the 'Enter' key is pressed (keyCode 13)
+        if (event.key === "Enter") {
+            // Call the handleSearch function when Enter key is pressed
+            handleSearch();
+        }
+    });
+>>>>>>> 7d5541d1e42935e1f76a9e7fe9fd4054d439b366
