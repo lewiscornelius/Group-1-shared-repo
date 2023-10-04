@@ -2,7 +2,8 @@ var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
 var currentTempEl = document.querySelector('#currentTemp');
 var currentWeatherEl = document.querySelector('#currentWeather');
 
-var city = { lng: -122, lat: 37 }; //place holder
+var city = document.getElementById("locationInput");
+
 
 function currentWeatherForecast() {
     fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
@@ -79,3 +80,11 @@ function searchMap() {
             console.error('Error:', error);
         });
     }
+
+    locationInput.addEventListener("keyup", function(event) {
+        // Check if the 'Enter' key is pressed (keyCode 13)
+        if (event.key === "Enter") {
+            // Call the handleSearch function when Enter key is pressed
+            handleSearch();
+        }
+    });
