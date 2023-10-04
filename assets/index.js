@@ -1,95 +1,46 @@
-var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
-var currentTempEl = document.querySelector('#currentTemp');
-var currentWeatherEl = document.querySelector('#currentWeather');
-
-
-locationValue.addEventListener("keyup", function(event) {
-    // Check if the 'Enter' key is pressed (keyCode 13)
-    if (event.key === "Enter") {
-       
-        var locationValue = document.getElementById("locationValue");
-        var city = locationValue.value;
-
-
+var sevenDayForecast = document.querySelector('sevenDayContainer');
+var city = 
 
 function currentWeatherForecast() {
-    fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
+ fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
 
-        .then(function (response) {
-            return response.json();
+ .then(function(response){
+    return response.json();
 
-        })
-        .then(function (data) {
-            console.log(data);
-        });
-
-}
-function sevenDayForecast() {
-    fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (data) {
-            console.log(data)
-        });
-}
-
-function searchInput() {
-    this.sevenDayForecast(document.getElementById(".input").value);
-    console.log(value);
-}
-
-document.querySelector(".input").addEventListener("keydown", function (event) { 
-    if (event.key == "Enter") {
-        sevenDayForecast.search(event);
-    }document.querySelector(".input").value });
-
-
-
-function displaySevenDayForecast(forecast) {
-    for (var i = 0; i < 7; i++) {
-        var sevenDays = document.querySelector('span');
-        var weather = document.createElement('div');
-        weather.classList = 'list-item flex-row justify-space-between align-center';
-
-        var temperature
-
-        weather.appendChild(sevenDays)
-        sevenDayForecastEl.appendChild(weather);
-    }
-}
-
-// // Initialize the map
-window.onload = function() {
-    L.map('mapid', {
-      layers: MQ.mapLayer(),
-      center: [ 40.731701, -73.993411 ],
-      zoom: 12
+ })
+    .then(function(data){
+        console.log(data);
     });
-  };
+   
 
-//This function needs to be ran on search
-// Function to perform the map search
-function searchMap() {
-    // Use MapQuest's free geocoding API to convert the location to coordinates
-    fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=gUgK3zuO2juaY9exckXhIafpgj38trkj&location=${city}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.results.length > 0) {
-                var coordinates = data.results[0].locations[0].latLng; // Get the coordinates from the API response
-                map.setView([coordinates.lat, coordinates.lng], 13); // Set the map view to the searched location
-                L.marker([coordinates.lat, coordinates.lng]).addTo(map); // Add a marker at the searched location
-            } else {
-                alert('Location not found. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
+ fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
 
+
+    .then(function (data) {
+        this.displayWeather(data);
+    })
 
 }
-    });
+function sevenDayForecast(){
+fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
+.then(function (response) {
+   return response.json();
+})
+   .then(function (data) {
+       console.log(data)
+   });
 
+}
 
+function trafficReport(){
+fetch("https://api.tomtom.com/traffic/services/4/flowSegmentData/absolute/10/xml?key={kYLbyqIA0g1ERQMZT87Gd66qOcgrH7nT}&point=52.41072,4.84239")
+ 
+.then(function(response){
+   return response.json();
+})
+   .then(function(data){
+       console.log(data);
+   });
+  
+=======
+})
