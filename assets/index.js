@@ -2,13 +2,14 @@ var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
 var currentTempEl = document.querySelector('#currentTemp');
 var currentWeatherEl = document.querySelector('#currentWeather');
 
+var city = '';
 
 locationValue.addEventListener("keyup", function(event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
     if (event.key === "Enter") {
        
         var locationValue = document.getElementById("locationValue");
-        var city = locationValue.value;
+        city = locationValue.value;
     }
 });
 
