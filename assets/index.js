@@ -9,6 +9,8 @@ locationValue.addEventListener("keyup", function(event) {
        
         var locationValue = document.getElementById("locationValue");
         var city = locationValue.value;
+    }
+});
 
 
 
@@ -90,9 +92,3 @@ function searchMap() {
             console.error('Error:', error);
         });
     }
-
-
-}
-    });
-
-
