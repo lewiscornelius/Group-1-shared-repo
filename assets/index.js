@@ -12,18 +12,29 @@ locationValue.addEventListener("keyup", function(event) {
 
 
 
-function currentWeatherForecast() {
-    fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
+function currentWeatherForecast(city) {
+    var currentWeatherURL = (`http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`);
 
-        .then(function (response) {
+    fetch (currentWeatherURL).then(function (response) {
             return response.json();
 
-        })
-        .then(function (data) {
-            console.log(data);
-        });
+    })
+    .then(function (data) {
+        console.log(data);
+        var weatherData = {};
+        weatherData.currentTemperature = Math.round(data.current.temp_f);
+        weatherData.precipitation = data.current.precip_+" mm";
+        weatherData.humidity = data.current.humidity;
+        weatherData.windSpeed = data.current.wind_mph;
+        weatherData.conditionalText = data.current.condition.text;
+        weatherData.conditionalIcon = data.current.condition.icon;
+        var date = new Date(data.current.last_updated);
+        var hour = data.getHours();
+        var minute = data.getMinutes();
+        minute = (minute < 10) ? "0"+minute : minute;
+        var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-}
+    });
 function sevenDayForecast() {
     fetch('http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&days=7')
         .then(function (response) {
