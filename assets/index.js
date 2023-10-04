@@ -2,7 +2,7 @@ var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
 var currentTempEl = document.querySelector('#currentTemp');
 var currentWeatherEl = document.querySelector('#currentWeather');
 
-var city = document.getElementById("locationInput");
+var city = document.getElementById("locationValue");
 
 
 function currentWeatherForecast() {
