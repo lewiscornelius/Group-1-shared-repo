@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     height: 100%;
     width: 100%;
     margin: 0;
@@ -9,63 +10,72 @@ body, html {
     align-items: center;
     justify-content: center;
     bottom: 51%;
-     
-    }
 
-#map { 
+}
+
+#map {
     width: 46vw;
     height: 76vh;
     left: 1%;
     position: relative;
     top: 7%;
-    }
+}
 
-    @media screen and (max-width:992px) {
-        header, body{
-            background: white;
-        }
-    }
-    
-    @media screen and (max-width:768px) {
-        header, body{
-            background: white;
-        }
-    }
-    
-    @media screen and (max-width:575p) {
-        header, body{
-            background: white;
-        }
-    }
+.section {
+    display: flex;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
 
 
-    .section {
-        display: flex;
-        position: fixed;
-        height: 100%;
-        width: 100%;
-    }
+.navbar-item {
+    background-color: #3e8ed0;
+    color: white;
+    transition: ease-in 0.2s;
+    background:
+        linear-gradient(to right,
+            rgba(255, 255, 255, 0),
+            rgba(255, 255, 255, 0)),
+        linear-gradient(to right,
+            rgba(105, 237, 244, 0.9),
+            rgba(35, 159, 225, 0.9),
+            rgba(0, 100, 200, .9));
+    background-size: 100% 3px, 0 3px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms;
+}
 
+.navbar-item:hover {
+    background-size: 0 3px, 100% 3px;
+}
 
-    .navbar-item {
-        background-color: #3e8ed0;
-        color: white;
-        transition: ease-in 0.2s;
-    }
+.navbar-menu {
+    background-color: #3e8ed0;
+}
 
-    .navbar-menu{
-        background-color: #3e8ed0;
-    }
+.footer {
+    background-color: #3e8ed0;
+    position: relative;
+    top: 90px;
+    padding: 0rem 1.5rem 5rem;
+}
 
-    .footer {
-        background-color: #3e8ed0;
-        position: relative;
-        top: 90px;
-        padding: 0rem 1.5rem 5rem;
-    }
-
-  .footer-text {
+.footer-text {
     position: relative;
     top: 36px;
     color: white;
-  }
+}
+
+@media screen and (max-width:992px) {
+    
+}
+
+@media screen and (max-width:768px) {
+
+}
+
+@media screen and (max-width:575p) {
+
+}
