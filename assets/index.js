@@ -12,7 +12,7 @@ locationValue.addEventListener("keyup", function (event) {
         city = locationValue.value;
         setMapLocation();
     }
-});    }
+});  
 
 function currentWeatherForecast(city) {
     var currentWeatherURL = (`http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`);
@@ -104,9 +104,5 @@ function setMapLocation() {
             console.error('Error:', error);
         });
     }
-
-
-}
-    });
 
 
