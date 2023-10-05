@@ -70,7 +70,7 @@ window.onload = function() {
     map = L.map('map', {
     layers: MQ.mapLayer(),
     center: [ 28.59675,  -81.20339 ],
-    zoom: 12
+    zoom: 16
 });
   
     MQ.trafficLayer().addTo(map);
@@ -87,7 +87,7 @@ function setMapLocation() {
         var longitude = firstResult.latLng.lng;
 
         // Set the map's center to the obtained coordinates
-        map.setView([latitude, longitude], 12);
+        map.setView([latitude, longitude], 16);
     })
         .catch((error) => {
             console.error('Error:', error);
