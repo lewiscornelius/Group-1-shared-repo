@@ -10,10 +10,9 @@ locationValue.addEventListener("keyup", function(event) {
        
         var locationValue = document.getElementById("locationValue");
         city = locationValue.value;
+        setMapLocation();
     }
 });
-
-
 
 function currentWeatherForecast() {
     fetch('http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809')
@@ -45,7 +44,6 @@ function searchInput() {
 document.querySelector(".input").addEventListener("keydown", function (event) { 
     if (event.key == "Enter") {
         // sevenDayForecast.search(event);
-        searchMap();
         city = document.querySelector(".input").value;
         console.log(city);
     }document.querySelector(".input").value });
@@ -65,31 +63,33 @@ function displaySevenDayForecast(forecast) {
     }
 }
 
-// // Initialize the map
+// Map
+var map;
+
 window.onload = function() {
-    L.map('mapid', {
-      layers: MQ.mapLayer(),
-      center: [ 40.731701, -73.993411 ],
-      zoom: 12
-    });
+    map = L.map('map', {
+    layers: MQ.mapLayer(),
+    center: [ 28.59675,  -81.20339 ],
+    zoom: 12
+});
+  
+    MQ.trafficLayer().addTo(map);
   };
 
-//This function needs to be ran on search
-// Function to perform the map search
-function searchMap() {
-    // Use MapQuest's free geocoding API to convert the location to coordinates
+function setMapLocation() {
+    // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
     fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=gUgK3zuO2juaY9exckXhIafpgj38trkj&location=${city}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.results.length > 0) {
-                var coordinates = data.results[0].locations[0].latLng; // Get the coordinates from the API response
-                map.setView([coordinates.lat, coordinates.lng], 13); // Set the map view to the searched location
-                L.marker([coordinates.lat, coordinates.lng]).addTo(map); // Add a marker at the searched location
-            } else {
-                alert('Location not found. Please try again.');
-            }
-        })
-        .catch(error => {
+        .then((response) => response.json())
+        .then((data) => {
+        // Extract latitude and longitude from the response
+        var firstResult = data.results[0].locations[0];
+        var latitude = firstResult.latLng.lat;
+        var longitude = firstResult.latLng.lng;
+
+        // Set the map's center to the obtained coordinates
+        map.setView([latitude, longitude], 12);
+    })
+        .catch((error) => {
             console.error('Error:', error);
         });
     }
