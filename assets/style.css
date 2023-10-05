@@ -8,13 +8,16 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+    bottom: 51%;
+     
     }
 
 #mapid { 
-    width: 100vw;
-    height: 33vh;
-    bottom: 0;
-    position: fixed;
+    width: 46vw;
+    height: 76vh;
+    left: 1%;
+    position: relative;
+    top: 7%;
     }
 
     @media screen and (max-width:992px) {
@@ -34,3 +37,35 @@ body, html {
             background: white;
         }
     }
+
+
+    .section {
+        display: flex;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
+
+
+    .navbar-item {
+        background-color: #3e8ed0;
+        color: white;
+        transition: ease-in 0.2s;
+    }
+
+    .navbar-menu{
+        background-color: #3e8ed0;
+    }
+
+    .footer {
+        background-color: #3e8ed0;
+        position: relative;
+        top: 90px;
+        padding: 0rem 1.5rem 5rem;
+    }
+
+  .footer-text {
+    position: relative;
+    top: 36px;
+    color: white;
+  }
