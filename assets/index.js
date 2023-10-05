@@ -1,21 +1,17 @@
 var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
 var currentTempEl = document.querySelector('#currentTemp');
 var currentWeatherEl = document.querySelector('#currentWeather');
-
 var city = '';
 
 locationValue.addEventListener("keyup", function (event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
     if (event.key === "Enter") {
-
-
         var locationValue = document.getElementById("locationValue");
         city = locationValue.value;
         setMapLocation();
-
-        currentWeatherForecast(city);
     }
-
+});
+// ------------------------------
     function currentWeatherForecast(city) {
         var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
 
@@ -82,34 +78,21 @@ locationValue.addEventListener("keyup", function (event) {
         function displayCurrentWeatherForecast(weatherData, city) {
 
         }
-
-
-
-
-
-
         var locationValue = document.getElementById("locationValue");
         city = locationValue.value;
         setMapLocation();
     }
-});
-
-
-
 
 // Map
 var map;
-
 window.onload = function () {
     map = L.map('map', {
         layers: MQ.mapLayer(),
         center: [28.59675, -81.20339],
         zoom: 16
     });
-
     MQ.trafficLayer().addTo(map);
 };
-
 function setMapLocation() {
     // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
     fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=gUgK3zuO2juaY9exckXhIafpgj38trkj&location=${city}`)
@@ -119,7 +102,6 @@ function setMapLocation() {
             var firstResult = data.results[0].locations[0];
             var latitude = firstResult.latLng.lat;
             var longitude = firstResult.latLng.lng;
-
             // Set the map's center to the obtained coordinates
             map.setView([latitude, longitude], 16);
         })
@@ -127,4 +109,3 @@ function setMapLocation() {
             console.error('Error:', error);
         });
 }
-
