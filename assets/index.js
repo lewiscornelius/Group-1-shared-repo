@@ -41,7 +41,7 @@ function currentWeatherForecast(city) {
             var dayOfWeek = weeklyArray[dayOfTheWeek];
             dayOfWeek += " " + hour + ":" + minute;
             weatherData.dayOfTheWeek = dayOfTheWeek;
-            currentWeatherEl(weatherData, city);
+            displayCurrentWeatherForecast(weatherData, city);
         });
 
     function sevenDayForecast(city) {
@@ -65,7 +65,7 @@ function currentWeatherForecast(city) {
                     weatherData.humidity = day.day.avghumidity;
                     weatherData.conditionalText = day.day.condition.text;
                     weatherData.maxTemp = Math.round(day.day.maxtemp_f);
-                    weatherData.maxTemp = Math.round(day.day.mintemp_f);
+                    weatherData.minTemp = Math.round(day.day.mintemp_f);
                     var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                     weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
                     var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
@@ -77,16 +77,52 @@ function currentWeatherForecast(city) {
 
     function displaySevenDayForecast(weatherData, city) {
         var div = document.createElement("div");
-        div.innerText = "sevenDayForecast";
+        div.className = "sevenDayForecast";
 
         var sevenDayForecast = document.createElement("div");
-        sevenDayForecast.innerText = "sevenDayForecast";
-        
+        sevenDayForecast.className = "sevenDayForecast";
+        sevenDayForecast.textContent = weatherData.dayOfWeek.substring(0,3);
+        div.appendChild(sevenDayForecast);
+
+        var image = document.createElement("div");
+        var img = document.createElement("img");
+        img.id = "conditionalIcon";
+        img.src = weatherData.conditionalIcon;
+        image.appendChild(img);
+        div.appendChild(image);
+
+        var minMaxTemp = document.createElement("div");
+        minMaxTemp.className = "minMaxTemp";
+
+        var span1Temperature = document.createElement("span");
+        span1Temperature.className = "temperature";
+        span1Temperature.textContent = weatherData.minTemp+"°";
+        minMaxTemp.appendChild(span1Temperature);
+        var span2Temperature = document.createElement("span");
+        span2Temperature.className = "temperature";
+        span2Temperature.textContent = weatherData.maxTemp+"°";
+        minMaxTemp.appendChild(span2Temperature);
+
+        div.appendChild(minMaxTemp);
+        div.addEventListener("click", function(){
+            displayCurrentWeatherForecast(weatherData,city);
+        });
+        return div;
     }
 
     function displayCurrentWeatherForecast(weatherData, city) {
+        currentTemperature.innerHTML = weatherData.currentTemperature;
+        precipitation.innerHTML = weatherData.precipitation;
+        humidity.innerHTML = weatherData.humidity+"%";
+        windSpeed.innerHTML = weatherData.windspeed+" mph";
+        conditions.innerHTML = weatherData.conditionalText;
+        today.innerHTML = weatherData.dayOfWeek;
+        nameOfCity.innerHTML = city;
+        document.getElementById("conditionalIcon").src = weatherData.conditionalIcon;
+
 
     }
+
     var locationValue = document.getElementById("locationValue");
     city = locationValue.value;
     setMapLocation();
