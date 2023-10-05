@@ -9,6 +9,8 @@ locationValue.addEventListener("keyup", function (event) {
         var locationValue = document.getElementById("locationValue");
         city = locationValue.value;
         setMapLocation();
+        currentWeatherForecast(city);
+        sevenDayForecast(city);
     }
 });
 
@@ -16,6 +18,7 @@ function currentWeatherForecast(city) {
     var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
 
     fetch(currentWeatherURL).then(function (response) {
+        console.log(response);
         return response.json();
 
     })
@@ -46,14 +49,15 @@ function currentWeatherForecast(city) {
         sevenDayForecastEl.innerHTML = "";
         fetch(weeklyForecastURL)
             .then(function (response) {
+                console.log(city);
                 return response.json();
             })
             .then(function (data) {
                 console.log(data)
-                data.forecast.forecastday.forEach(day => {
+                data.forecast.forecastday.forEach(day=>{
                     var weatherData = {};
                     weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                    weatherData.conditonalIcon = "https:" + day.day.condition.icon;
+                    weatherData.conditonalIcon = "https:"+day.day.condition.icon;
                     var date = new Date(day.date);
                     var dayOfTheWeek = date.getDay();
                     weatherData.precipitation = day.day.daily_chance_of_rain + "%";
@@ -72,7 +76,12 @@ function currentWeatherForecast(city) {
     }
 
     function displaySevenDayForecast(weatherData, city) {
-        var div
+        var div = document.createElement("div");
+        div.innerText = "sevenDayForecast";
+
+        var sevenDayForecast = document.createElement("div");
+        sevenDayForecast.innerText = "sevenDayForecast";
+        
     }
 
     function displayCurrentWeatherForecast(weatherData, city) {
