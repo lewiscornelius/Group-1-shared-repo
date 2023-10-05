@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Weather Vibes</title>
+  <!-- below is for traffic map  -->
+  <link rel="'stylesheet" type="text/css" href="'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/maps/maps.css'">
   <!-- below is for map  -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
@@ -17,13 +19,14 @@
 </head>
 
 <body>
-  
+
   <!-- Nav bar -->
   <div id="navbar">
     <nav class="navbar is-transparent">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+          <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox"
+            width="112" height="28">
         </a>
         <div class="navbar-burger" data-target="navbarExampleTransparentExample">
           <span></span>
@@ -31,17 +34,23 @@
           <span></span>
         </div>
       </div>
-           
+
       <div id="navbarExampleTransparentExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item" href="#currentWeather">Sample</a>
-          <a class="navbar-item" href="https://bulma.io/">Sample</a>
-          <a class="navbar-item" href="https://bulma.io/">Sample</a>
-          <a class="navbar-item" href="https://bulma.io/">Sample</a>
+          <a class="navbar-item" href="#currentWeather">Weather</a>
+          <a class="navbar-item" href="#">Traffic</a>
+          <a class="navbar-item" href="#">About</a>
+          <a class="navbar-item" href="#">Contact Us</a>
         </div>
       </div>
     </nav>
   </div>
+
+
+  <!--Weather Map-->
+  <section id="Map" class="weather">
+    <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.5.0/maps/maps-web.min.js"> </script>
+  </section>
 
 
   <!-- Search bar to find current location -->
@@ -51,10 +60,13 @@
         <div class="control">
           <input id="locationValue" class="input" type="text" placeholder="Find your location">
         </div>
+        <div class="control">
+          <a class="button is-info">
+            Search
+          </a>
+        </div>
       </div>
-    </div>
   </section>
-
 
     <section id="weather-container">
       <!-- Current temperature within the weather container -->
