@@ -11,77 +11,77 @@ locationValue.addEventListener("keyup", function (event) {
         setMapLocation();
     }
 });
-// ------------------------------
-    function currentWeatherForecast(city) {
-        var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
 
-        fetch(currentWeatherURL).then(function (response) {
-            return response.json();
+function currentWeatherForecast(city) {
+    var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
 
-        })
+    fetch(currentWeatherURL).then(function (response) {
+        return response.json();
+
+    })
+        .then(function (data) {
+            console.log(data);
+            var weatherData = {};
+            weatherData.currentTemperature = Math.round(data.current.temp_f);
+            weatherData.precipitation = data.current.precip_ + " mm";
+            weatherData.humidity = data.current.humidity;
+            weatherData.windSpeed = data.current.wind_mph;
+            weatherData.conditionalText = data.current.condition.text;
+            weatherData.conditionalIcon = data.current.condition.icon;
+            var date = new Date(data.current.last_updated);
+            var hour = data.getHours();
+            console.log(hour);
+            var minute = data.getMinutes();
+            minute = (minute < 10) ? "0" + minute : minute;
+            dayOfTheWeek = date.getDay();
+            var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var dayOfWeek = weeklyArray[dayOfTheWeek];
+            dayOfWeek += " " + hour + ":" + minute;
+            weatherData.dayOfTheWeek = dayOfTheWeek;
+            currentWeatherEl(weatherData, city);
+        });
+
+    function sevenDayForecast(city) {
+        var weeklyForecastURL = `http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&q=${city}&days=7`
+        sevenDayForecastEl.innerHTML = "";
+        fetch(weeklyForecastURL)
+            .then(function (response) {
+                return response.json();
+            })
             .then(function (data) {
-                console.log(data);
-                var weatherData = {};
-                weatherData.currentTemperature = Math.round(data.current.temp_f);
-                weatherData.precipitation = data.current.precip_ + " mm";
-                weatherData.humidity = data.current.humidity;
-                weatherData.windSpeed = data.current.wind_mph;
-                weatherData.conditionalText = data.current.condition.text;
-                weatherData.conditionalIcon = data.current.condition.icon;
-                var date = new Date(data.current.last_updated);
-                var hour = data.getHours();
-                console.log(hour);
-                var minute = data.getMinutes();
-                minute = (minute < 10) ? "0" + minute : minute;
-                dayOfTheWeek = date.getDay();
-                var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                var dayOfWeek = weeklyArray[dayOfTheWeek];
-                dayOfWeek += " " + hour + ":" + minute;
-                weatherData.dayOfTheWeek = dayOfTheWeek;
-                currentWeatherEl(weatherData, city);
+                console.log(data)
+                data.forecast.forecastday.forEach(day => {
+                    var weatherData = {};
+                    weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
+                    weatherData.conditonalIcon = "https:" + day.day.condition.icon;
+                    var date = new Date(day.date);
+                    var dayOfTheWeek = date.getDay();
+                    weatherData.precipitation = day.day.daily_chance_of_rain + "%";
+                    weatherData.windSpeed = day.day.maxwind_mph;
+                    weatherData.humidity = day.day.avghumidity;
+                    weatherData.conditionalText = day.day.condition.text;
+                    weatherData.maxTemp = Math.round(day.day.maxtemp_f);
+                    weatherData.maxTemp = Math.round(day.day.mintemp_f);
+                    var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
+                    var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
+                    sevenDayForecastEl.appendChild(sevenDayForecastHTML);
+                }
+                )
             });
-
-        function sevenDayForecast(city) {
-            var weeklyForecastURL = `http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&q=${city}&days=7`
-            sevenDayForecastEl.innerHTML = "";
-            fetch(weeklyForecastURL)
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    console.log(data)
-                    data.forecast.forecastday.forEach(day => {
-                        var weatherData = {};
-                        weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                        weatherData.conditonalIcon = "https:" + day.day.condition.icon;
-                        var date = new Date(day.date);
-                        var dayOfTheWeek = date.getDay();
-                        weatherData.precipitation = day.day.daily_chance_of_rain + "%";
-                        weatherData.windSpeed = day.day.maxwind_mph;
-                        weatherData.humidity = day.day.avghumidity;
-                        weatherData.conditionalText = day.day.condition.text;
-                        weatherData.maxTemp = Math.round(day.day.maxtemp_f);
-                        weatherData.maxTemp = Math.round(day.day.mintemp_f);
-                        var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                        weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
-                        var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
-                        sevenDayForecastEl.appendChild(sevenDayForecastHTML);
-                    }
-                    )
-                });
-        }
-
-        function displaySevenDayForecast(weatherData, city) {
-            var div
-        }
-
-        function displayCurrentWeatherForecast(weatherData, city) {
-
-        }
-        var locationValue = document.getElementById("locationValue");
-        city = locationValue.value;
-        setMapLocation();
     }
+
+    function displaySevenDayForecast(weatherData, city) {
+        var div
+    }
+
+    function displayCurrentWeatherForecast(weatherData, city) {
+
+    }
+    var locationValue = document.getElementById("locationValue");
+    city = locationValue.value;
+    setMapLocation();
+}
 
 // Map
 var map;
