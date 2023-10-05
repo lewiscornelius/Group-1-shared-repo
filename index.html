@@ -70,12 +70,42 @@
   </section>
 
     <section id="weather-container">
-      <!-- Current temperature within the weather container -->
-      <div id="curentTemp"></div>
       <!-- Current weather condition e.i. sunny, cloudy, rainy-->
-      <div id="currentWeather"></div>
+      <div id="currentWeather">
+        <div id="currentWeatherForecast">
+            <img id="conditionalIcon" src="113.webp">
+            <div>
+              <span id="currentTempereature">0</span>
+            </div>
+            <div>
+              <span id="currentTempUnits"><sup>o</sup>C</span>
+            </div>
+            <div id="currentWeatherConditions">
+              <div>Wind Speed:<span id="windSpeed"></span></div>
+              <div>Humidity:<span id="humidity"></span></div>
+              <div>Precipitation:<span id="precipitation"></span></div>
+            </div>
+            <div id="currentDaysForecast">
+              <div id="nameOfCity">Weather</div>
+              <div id="today">Day</div>
+              <div id="conditions">Conditions</div>
+            </div>
+          <div id="sevenDayContainer">
+            <div id="dailyForecast"<div class="weekday">Friday</div>
+            <div><img id="conditionalIcon" src="113.webp"></div>
+            <div class="minMaxTemp">
+              <span class="temp">55</span>
+              <span class="temp">75</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- Cards for the seven day weather conditions -->
-      <div id="sevenDayContainer"></div>
+      <div id="sevenDayContainer">
+        <div>
+
+        </div>
+      </div>
     </section>
 
     <!-- Map -->
