@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
   <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-map.js?key=gUgK3zuO2juaY9exckXhIafpgj38trkj"></script>
-
+  <script src="https://www.mapquestapi.com/sdk/leaflet/v2.2/mq-traffic.js?key=gUgK3zuO2juaY9exckXhIafpgj38trkj"></script>
 
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -68,34 +68,19 @@
       </div>
   </section>
 
+    <section id="weather-container">
+      <!-- Current temperature within the weather container -->
+      <div id="curentTemp"></div>
+      <!-- Current weather condition e.i. sunny, cloudy, rainy-->
+      <div id="currentWeather"></div>
+      <!-- Cards for the seven day weather conditions -->
+      <div id="sevenDayContainer"></div>
+    </section>
 
-  <section id="weather-container">
-    <!-- Current temperature within the weather container -->
-    <div id="curentTemp"></div>
-    <!-- Current weather condition e.i. sunny, cloudy, rainy-->
-    <div id="currentWeather"></div>
-    <!-- Cards for the seven day weather conditions -->
-    <div id="sevenDayContainer"></div>
-  </section>
-
-
-
-
-
-  <!-- Playlist -->
-  <div id="mapid"></div>
-  </section>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="./assets/index.js"></script>
-</body>
-
-<!--Footer-->
-<footer class="footer">
-  <div class="content has-text-centered">
-    <p class="footer-text">
-      &copy; 2023 WeatherVibes | All Rights Reserved
-    </p>
-  </div>
-</footer>
-
+    <!-- Map -->
+    <div id="map"></div>
+    </section>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./assets/index.js"></script>
+  </body>
 </html>
