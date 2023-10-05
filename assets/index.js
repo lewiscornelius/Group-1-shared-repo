@@ -1,6 +1,6 @@
 var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
-var currentTempEl = document.querySelector('#currentTemp');
-var currentWeatherEl = document.querySelector('#currentWeather');
+// var currentTempEl = document.querySelector('#currentTemp');
+// var currentWeatherEl = document.querySelector('#currentWeather');
 var city = '';
 
 locationValue.addEventListener("keyup", function (event) {
@@ -10,7 +10,7 @@ locationValue.addEventListener("keyup", function (event) {
         city = locationValue.value;
         setMapLocation();
         currentWeatherForecast(city);
-        sevenDayForecast(city);
+        // sevenDayForecast(city);
     }
 });
 
@@ -41,8 +41,8 @@ function currentWeatherForecast(city) {
             var dayOfWeek = weeklyArray[dayOfTheWeek];
             dayOfWeek += " " + hour + ":" + minute;
             weatherData.dayOfTheWeek = dayOfTheWeek;
-            sevenDayForecast(city);
             displaySevenDayForecast(weatherData, city);
+            sevenDayForecast(city);
         });
 
     function sevenDayForecast(city) {
@@ -55,10 +55,10 @@ function currentWeatherForecast(city) {
             })
             .then(function (data) {
                 console.log(data)
-                data.forecast.forecastday.forEach(day=>{
+                data.forecast.forecastday.forEach(day => {
                     var weatherData = {};
                     weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                    weatherData.conditonalIcon = "https:"+day.day.condition.icon;
+                    weatherData.conditonalIcon = "https:" + day.day.condition.icon;
                     var date = new Date(day.date);
                     var dayOfTheWeek = date.getDay();
                     weatherData.precipitation = day.day.daily_chance_of_rain + "%";
@@ -82,7 +82,7 @@ function currentWeatherForecast(city) {
 
         var sevenDayForecast = document.createElement("div");
         sevenDayForecast.className = "sevenDayForecast";
-        sevenDayForecast.textContent = weatherData.dayOfWeek.substring(0,3);
+        sevenDayForecast.textContent = weatherData.dayOfWeek.substring(0, 3);
         div.appendChild(sevenDayForecast);
 
         var image = document.createElement("div");
@@ -97,36 +97,36 @@ function currentWeatherForecast(city) {
 
         var span1Temperature = document.createElement("span");
         span1Temperature.className = "temperature";
-        span1Temperature.textContent = weatherData.minTemp+"°";
+        span1Temperature.textContent = weatherData.minTemp + "°";
         minMaxTemp.appendChild(span1Temperature);
         var span2Temperature = document.createElement("span");
         span2Temperature.className = "temperature";
-        span2Temperature.textContent = weatherData.maxTemp+"°";
+        span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
 
         div.appendChild(minMaxTemp);
-        div.addEventListener("click", function(){
-            displayCurrentWeatherForecast(weatherData,city);
+        div.addEventListener("click", function () {
+            displayCurrentWeatherForecast(weatherData, city);
         });
         return div;
     }
 
     function displayCurrentWeatherForecast(weatherData, city) {
+        console.log(weatherData);
+        console.log(city);
+        console.log(displayCurrentWeatherForecast);
+
         currentTemperature.innerHTML = weatherData.currentTemperature;
         precipitation.innerHTML = weatherData.precipitation;
-        humidity.innerHTML = weatherData.humidity+"%";
-        windSpeed.innerHTML = weatherData.windspeed+" mph";
+        humidity.innerHTML = weatherData.humidity + "%";
+        windSpeed.innerHTML = weatherData.windspeed + " mph";
         conditions.innerHTML = weatherData.conditionalText;
         today.innerHTML = weatherData.dayOfWeek;
         nameOfCity.innerHTML = city;
         document.getElementById("conditionalIcon").src = weatherData.conditionalIcon;
-
-
     }
 
-    var locationValue = document.getElementById("locationValue");
-    city = locationValue.value;
-    setMapLocation();
+
 }
 
 // Map
