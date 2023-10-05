@@ -69,7 +69,7 @@ function currentWeatherForecast(city) {
                     weatherData.minTemp = Math.round(day.day.mintemp_f);
                     var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                     weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
-                    var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
+                    var sevenDayForecastHTML = displaySevenDayForecast(weatherData, city);
                     sevenDayForecastEl.appendChild(sevenDayForecastHTML);
                 }
                 )
@@ -106,7 +106,7 @@ function currentWeatherForecast(city) {
 
         div.appendChild(minMaxTemp);
         div.addEventListener("click", function () {
-            displayCurrentWeatherForecast(weatherData, city);
+        displayCurrentWeatherForecast(weatherData, city);
         });
         return div;
     }
