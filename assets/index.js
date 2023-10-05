@@ -41,7 +41,8 @@ function currentWeatherForecast(city) {
             var dayOfWeek = weeklyArray[dayOfTheWeek];
             dayOfWeek += " " + hour + ":" + minute;
             weatherData.dayOfTheWeek = dayOfTheWeek;
-            displayCurrentWeatherForecast(weatherData, city);
+            sevenDayForecast(city);
+            displaySevenDayForecast(weatherData, city);
         });
 
     function sevenDayForecast(city) {
