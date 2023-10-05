@@ -12,13 +12,9 @@ locationValue.addEventListener("keyup", function (event) {
         var locationValue = document.getElementById("locationValue");
         city = locationValue.value;
         setMapLocation();
-      
-      currentWeatherForecast(city);
-    }
 
-    
-        
-    
+        currentWeatherForecast(city);
+    }
 
     function currentWeatherForecast(city) {
         var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
@@ -72,21 +68,22 @@ locationValue.addEventListener("keyup", function (event) {
                         weatherData.maxTemp = Math.round(day.day.mintemp_f);
                         var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
                         weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
-                        var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData,city);
+                        var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
                         sevenDayForecastEl.appendChild(sevenDayForecastHTML);
                     }
-)});
+                    )
+                });
         }
 
-        function displaySevenDayForecast(weatherData,city) {
+        function displaySevenDayForecast(weatherData, city) {
             var div
         }
 
-        function displayCurrentWeatherForecast(weatherData,city){
+        function displayCurrentWeatherForecast(weatherData, city) {
 
         }
 
-      
+
 
 
 
