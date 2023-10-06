@@ -32,12 +32,12 @@ function currentWeatherForecast(city) {
             weatherData.conditionalText = data.current.condition.text;
             weatherData.conditionalIcon = data.current.condition.icon;
             var date = new Date(data.current.last_updated);
-            var hour = data.getHours();
+            var hour = date.getHours();
             console.log(hour);
-            var minute = data.getMinutes();
+            var minute = date.getMinutes();
             minute = (minute < 10) ? "0" + minute : minute;
-            dayOfTheWeek = date.getDay();
-            var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var dayOfTheWeek = date.getDay();
+            var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"];
             var dayOfWeek = weeklyArray[dayOfTheWeek];
             dayOfWeek += " " + hour + ":" + minute;
             weatherData.dayOfTheWeek = dayOfTheWeek;
@@ -67,7 +67,7 @@ function currentWeatherForecast(city) {
                     weatherData.conditionalText = day.day.condition.text;
                     weatherData.maxTemp = Math.round(day.day.maxtemp_f);
                     weatherData.minTemp = Math.round(day.day.mintemp_f);
-                    var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                     weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
                     var sevenDayForecastHTML = displaySevenDayForecast(weatherData, city);
                     sevenDayForecastEl.appendChild(sevenDayForecastHTML);
@@ -82,7 +82,7 @@ function currentWeatherForecast(city) {
 
         var sevenDayForecast = document.createElement("div");
         sevenDayForecast.className = "sevenDayForecast";
-        sevenDayForecast.textContent = weatherData.dayOfWeek.substring(0, 3);
+        sevenDayForecast.textContent = weatherData.dayOfWeek;
         div.appendChild(sevenDayForecast);
 
         var image = document.createElement("div");
@@ -104,9 +104,13 @@ function currentWeatherForecast(city) {
         span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
 
+
+
         div.appendChild(minMaxTemp);
         div.addEventListener("click", function () {
         displayCurrentWeatherForecast(weatherData, city);
+
+
         });
         return div;
     }
