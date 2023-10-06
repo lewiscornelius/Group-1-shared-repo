@@ -55,6 +55,10 @@ html {
     background-color: #3e8ed0;
 }
 
+.navbar-brand {
+    background-color: #3e8ed0;
+}
+
 .footer {
     background-color: #3e8ed0;
     position: relative;
