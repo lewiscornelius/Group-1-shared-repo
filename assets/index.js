@@ -103,6 +103,10 @@ function currentWeatherForecast(city) {
         span2Temperature.className = "temperature";
         span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
+        var icon = document.getElementById("conditionalIcon");
+        icon.setAttribute("src", weatherData.current.condition.icon)
+        
+
 
 
 
