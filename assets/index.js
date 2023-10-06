@@ -103,7 +103,7 @@ function currentWeatherForecast(city) {
         span2Temperature.className = "temperature";
         span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
-        
+         brianWins
         div.appendChild(minMaxTemp);
         div.addEventListener("click", function () {
         displayCurrentWeatherForecast(weatherData, city);
