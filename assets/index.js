@@ -25,7 +25,7 @@ locationValue.addEventListener("keyup", function (event) {
         currentWeatherForecast(city);
         saveSearchToLocalStorage(city);
     }
-});
+});  
 
 function currentWeatherForecast(city) {
     var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
