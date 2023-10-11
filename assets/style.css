@@ -83,3 +83,9 @@ html {
 @media screen and (max-width:575p) {
 
 }
+
+#weather-container{
+    display: flex;
+    justify-content: center;
+    height: 0;
+}
