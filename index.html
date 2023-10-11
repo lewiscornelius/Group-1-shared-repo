@@ -73,12 +73,9 @@
       <!-- Current weather condition e.i. sunny, cloudy, rainy-->
       <div id="currentWeather">
         <div id="currentWeatherForecast">
-            <img id="conditionalIcon" src="113.webp">
+            <img id="conditionalIcon" src="https://www.weatherapi.com/docs/weather_conditions.json">
             <div>
-              <span id="currentTempereature">0</span>
-            </div>
-            <div>
-              <span id="currentTempUnits"><sup>o</sup>C</span>
+              <span id="currentTemperature"></span>&deg;F
             </div>
             <div id="currentWeatherConditions">
               <div>Wind Speed:<span id="windSpeed"></span></div>
@@ -91,11 +88,11 @@
               <div id="conditions">Conditions</div>
             </div>
           <div id="sevenDayContainer">
-            <div id="dailyForecast"><div class="weekday">Friday</div>
-            <div><img id="conditionalIcon" src="113.webp"></div>
+            <div id="dailyForecast"><div class="weekday"></div>
+            <div><img id="conditionalIcon" src="https://www.weatherapi.com/docs/weather_conditions.json"></div>
             <div class="minMaxTemp">
-              <span class="temp">55</span>
-              <span class="temp">75</span>
+              <span class="temp"></span>
+              <span class="temp"></span>
             </div>
           </div>
         </div>
@@ -114,4 +111,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/index.js"></script>
   </body>
+  
+  <!--Footer -->
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p class="footer-text">
+        &copy; 2023 WeatherWays | All Rights Reserved
+      </p>
+    </div>
+  </footer>
 </html>

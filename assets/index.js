@@ -1,7 +1,20 @@
 var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
-var currentTempEl = document.querySelector('#currentTemp');
-var currentWeatherEl = document.querySelector('#currentWeather');
+var currentTempEl = document.querySelector('#currentTemperature');
+// var currentWeatherEl = document.querySelector('#currentWeather');
 var city = '';
+
+function saveSearchToLocalStorage(city) {
+    localStorage.setItem('lastSearch', city);
+}
+
+function loadLastSearch() {
+    var lastSearch = localStorage.getItem('lastSearch');
+    if (lastSearch) {
+        city = lastSearch;
+        setMapLocation();
+        currentWeatherForecast(city);
+    }
+}
 
 locationValue.addEventListener("keyup", function (event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
@@ -10,7 +23,7 @@ locationValue.addEventListener("keyup", function (event) {
         city = locationValue.value;
         setMapLocation();
         currentWeatherForecast(city);
-        sevenDayForecast(city);
+        saveSearchToLocalStorage(city);
     }
 });  
 
@@ -32,15 +45,17 @@ function currentWeatherForecast(city) {
             weatherData.conditionalText = data.current.condition.text;
             weatherData.conditionalIcon = data.current.condition.icon;
             var date = new Date(data.current.last_updated);
-            var hour = data.getHours();
+            var hour = date.getHours();
             console.log(hour);
-            var minute = data.getMinutes();
+            var minute = date.getMinutes();
             minute = (minute < 10) ? "0" + minute : minute;
-            dayOfTheWeek = date.getDay();
-            var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            var dayOfTheWeek = date.getDay();
+            var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"];
             var dayOfWeek = weeklyArray[dayOfTheWeek];
             dayOfWeek += " " + hour + ":" + minute;
             weatherData.dayOfTheWeek = dayOfTheWeek;
+            displaySevenDayForecast(weatherData, city);
+            sevenDayForecast(city);
             displayCurrentWeatherForecast(weatherData, city);
         });
 
@@ -54,10 +69,10 @@ function currentWeatherForecast(city) {
             })
             .then(function (data) {
                 console.log(data)
-                data.forecast.forecastday.forEach(day=>{
+                data.forecast.forecastday.forEach(day => {
                     var weatherData = {};
                     weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                    weatherData.conditonalIcon = "https:"+day.day.condition.icon;
+                    weatherData.conditionalIcon = "https:" + day.day.condition.icon;
                     var date = new Date(day.date);
                     var dayOfTheWeek = date.getDay();
                     weatherData.precipitation = day.day.daily_chance_of_rain + "%";
@@ -66,9 +81,9 @@ function currentWeatherForecast(city) {
                     weatherData.conditionalText = day.day.condition.text;
                     weatherData.maxTemp = Math.round(day.day.maxtemp_f);
                     weatherData.minTemp = Math.round(day.day.mintemp_f);
-                    var weeklyArray = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                    var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
                     weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
-                    var sevenDayForecastHTML = displaySevenDayForecastHTML(weatherData, city);
+                    var sevenDayForecastHTML = displaySevenDayForecast(weatherData, city);
                     sevenDayForecastEl.appendChild(sevenDayForecastHTML);
                 }
                 )
@@ -81,7 +96,7 @@ function currentWeatherForecast(city) {
 
         var sevenDayForecast = document.createElement("div");
         sevenDayForecast.className = "sevenDayForecast";
-        sevenDayForecast.textContent = weatherData.dayOfWeek.substring(0,3);
+        sevenDayForecast.textContent = weatherData.dayOfWeek;
         div.appendChild(sevenDayForecast);
 
         var image = document.createElement("div");
@@ -96,36 +111,39 @@ function currentWeatherForecast(city) {
 
         var span1Temperature = document.createElement("span");
         span1Temperature.className = "temperature";
-        span1Temperature.textContent = weatherData.minTemp+"°";
+        span1Temperature.textContent = weatherData.minTemp + "°";
         minMaxTemp.appendChild(span1Temperature);
         var span2Temperature = document.createElement("span");
         span2Temperature.className = "temperature";
-        span2Temperature.textContent = weatherData.maxTemp+"°";
+        span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
-
+         brianWins
         div.appendChild(minMaxTemp);
-        div.addEventListener("click", function(){
-            displayCurrentWeatherForecast(weatherData,city);
+        div.addEventListener("click", function () {
+        displayCurrentWeatherForecast(weatherData, city);
+
+
         });
         return div;
     }
 
     function displayCurrentWeatherForecast(weatherData, city) {
-        currentTemperature.innerHTML = weatherData.currentTemperature;
+        console.log(weatherData);
+        console.log(city);
+        console.log(displayCurrentWeatherForecast);
+
+        currentTempEl.innerHTML = weatherData.currentTemperature;
+        console.log(weatherData.currentTemperature);
         precipitation.innerHTML = weatherData.precipitation;
-        humidity.innerHTML = weatherData.humidity+"%";
-        windSpeed.innerHTML = weatherData.windspeed+" mph";
+        humidity.innerHTML = weatherData.humidity + "%";
+        windSpeed.innerHTML = weatherData.windspeed + " mph";
         conditions.innerHTML = weatherData.conditionalText;
         today.innerHTML = weatherData.dayOfWeek;
         nameOfCity.innerHTML = city;
         document.getElementById("conditionalIcon").src = weatherData.conditionalIcon;
-
-
     }
 
-    var locationValue = document.getElementById("locationValue");
-    city = locationValue.value;
-    setMapLocation();
+
 }
 
 // Map
@@ -137,6 +155,7 @@ window.onload = function () {
         zoom: 16
     });
     MQ.trafficLayer().addTo(map);
+    loadLastSearch();
 };
 function setMapLocation() {
     // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
