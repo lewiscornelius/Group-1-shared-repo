@@ -1,7 +1,20 @@
 var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
-// var currentTempEl = document.querySelector('#currentTemp');
+var currentTempEl = document.querySelector('#currentTemperature');
 // var currentWeatherEl = document.querySelector('#currentWeather');
 var city = '';
+
+function saveSearchToLocalStorage(city) {
+    localStorage.setItem('lastSearch', city);
+}
+
+function loadLastSearch() {
+    var lastSearch = localStorage.getItem('lastSearch');
+    if (lastSearch) {
+        city = lastSearch;
+        setMapLocation();
+        currentWeatherForecast(city);
+    }
+}
 
 locationValue.addEventListener("keyup", function (event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
@@ -10,7 +23,7 @@ locationValue.addEventListener("keyup", function (event) {
         city = locationValue.value;
         setMapLocation();
         currentWeatherForecast(city);
-        // sevenDayForecast(city);
+        saveSearchToLocalStorage(city);
     }
 });
 
@@ -43,6 +56,7 @@ function currentWeatherForecast(city) {
             weatherData.dayOfTheWeek = dayOfTheWeek;
             displaySevenDayForecast(weatherData, city);
             sevenDayForecast(city);
+            displayCurrentWeatherForecast(weatherData, city);
         });
 
     function sevenDayForecast(city) {
@@ -58,7 +72,7 @@ function currentWeatherForecast(city) {
                 data.forecast.forecastday.forEach(day => {
                     var weatherData = {};
                     weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                    weatherData.conditonalIcon = "https:" + day.day.condition.icon;
+                    weatherData.conditionalIcon = "https:" + day.day.condition.icon;
                     var date = new Date(day.date);
                     var dayOfTheWeek = date.getDay();
                     weatherData.precipitation = day.day.daily_chance_of_rain + "%";
@@ -103,9 +117,7 @@ function currentWeatherForecast(city) {
         span2Temperature.className = "temperature";
         span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
-
-
-
+         brianWins
         div.appendChild(minMaxTemp);
         div.addEventListener("click", function () {
         displayCurrentWeatherForecast(weatherData, city);
@@ -120,7 +132,8 @@ function currentWeatherForecast(city) {
         console.log(city);
         console.log(displayCurrentWeatherForecast);
 
-        currentTemperature.innerHTML = weatherData.currentTemperature;
+        currentTempEl.innerHTML = weatherData.currentTemperature;
+        console.log(weatherData.currentTemperature);
         precipitation.innerHTML = weatherData.precipitation;
         humidity.innerHTML = weatherData.humidity + "%";
         windSpeed.innerHTML = weatherData.windspeed + " mph";
@@ -142,6 +155,7 @@ window.onload = function () {
         zoom: 16
     });
     MQ.trafficLayer().addTo(map);
+    loadLastSearch();
 };
 function setMapLocation() {
     // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
