@@ -39,11 +39,11 @@ function currentWeatherForecast(city) {
             console.log(data);
             var weatherData = {};
             weatherData.currentTemperature = Math.round(data.current.temp_f);
-            weatherData.precipitation = data.current.precip_ + " mm";
-            weatherData.humidity = data.current.humidity;
-            weatherData.windSpeed = data.current.wind_mph;
+            weatherData.precipitation = " " + data.current.precip_in + " in";
+            weatherData.humidity = " " + data.current.humidity;
+            weatherData.windSpeed = " " + data.current.wind_mph;
             weatherData.conditionalText = data.current.condition.text;
-            weatherData.conditionalIcon = data.current.condition.icon;
+            weatherData.conditionalIcon = "https:" + data.current.condition.icon;
             var date = new Date(data.current.last_updated);
             var hour = date.getHours();
             console.log(hour);
@@ -117,12 +117,9 @@ function currentWeatherForecast(city) {
         span2Temperature.className = "temperature";
         span2Temperature.textContent = weatherData.maxTemp + "°";
         minMaxTemp.appendChild(span2Temperature);
-         brianWins
         div.appendChild(minMaxTemp);
         div.addEventListener("click", function () {
         displayCurrentWeatherForecast(weatherData, city);
-
-
         });
         return div;
     }
@@ -131,16 +128,25 @@ function currentWeatherForecast(city) {
         console.log(weatherData);
         console.log(city);
         console.log(displayCurrentWeatherForecast);
+        var weekday = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+        var d = new Date();
+        var day = weekday[d.getDay()];
+
+        var div = document.createElement("div");
+        div.className = "sevenDayForecast";
+
+        var img = document.getElementById("conditionalIcon");
+        img.src = weatherData.conditionalIcon;
+
 
         currentTempEl.innerHTML = weatherData.currentTemperature;
         console.log(weatherData.currentTemperature);
         precipitation.innerHTML = weatherData.precipitation;
         humidity.innerHTML = weatherData.humidity + "%";
-        windSpeed.innerHTML = weatherData.windspeed + " mph";
+        windSpeed.innerHTML = weatherData.windSpeed + " mph";
         conditions.innerHTML = weatherData.conditionalText;
-        today.innerHTML = weatherData.dayOfWeek;
+        today.innerHTML = day;
         nameOfCity.innerHTML = city;
-        document.getElementById("conditionalIcon").src = weatherData.conditionalIcon;
     }
 
 
