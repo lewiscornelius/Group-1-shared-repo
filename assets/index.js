@@ -3,6 +3,19 @@ var currentTempEl = document.querySelector('#currentTemperature');
 // var currentWeatherEl = document.querySelector('#currentWeather');
 var city = '';
 
+function saveSearchToLocalStorage(city) {
+    localStorage.setItem('lastSearch', city);
+}
+
+function loadLastSearch() {
+    var lastSearch = localStorage.getItem('lastSearch');
+    if (lastSearch) {
+        city = lastSearch;
+        setMapLocation();
+        currentWeatherForecast(city);
+    }
+}
+
 locationValue.addEventListener("keyup", function (event) {
     // Check if the 'Enter' key is pressed (keyCode 13)
     if (event.key === "Enter") {
@@ -10,6 +23,7 @@ locationValue.addEventListener("keyup", function (event) {
         city = locationValue.value;
         setMapLocation();
         currentWeatherForecast(city);
+        saveSearchToLocalStorage(city);
     }
 });
 
@@ -141,6 +155,7 @@ window.onload = function () {
         zoom: 16
     });
     MQ.trafficLayer().addTo(map);
+    loadLastSearch();
 };
 function setMapLocation() {
     // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
