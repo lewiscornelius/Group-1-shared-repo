@@ -1,14 +1,22 @@
-var sevenDayForecastEl = document.querySelector('#sevenDayContainer');
-var currentTempEl = document.querySelector('#currentTemperature');
-// var currentWeatherEl = document.querySelector('#currentWeather');
-var city = '';
+const sevenDayForecastEl = document.querySelector('#sevenDayContainer');
+const currentTempEl = document.querySelector('#currentTemperature');
+const locationValue = document.getElementById('locationValue');
+const precipitation = document.querySelector('#precipitation');
+const humidity = document.querySelector('#humidity');
+const windSpeed = document.querySelector('#windSpeed');
+const conditions = document.querySelector('#conditions');
+const today = document.querySelector('#today');
+const nameOfCity = document.querySelector('#nameOfCity');
+let city = '';
+
+const weatherApiKey = '0326e1253a344fc8858235651232809'; // Replace with your actual API key
 
 function saveSearchToLocalStorage(city) {
     localStorage.setItem('lastSearch', city);
 }
 
 function loadLastSearch() {
-    var lastSearch = localStorage.getItem('lastSearch');
+    const lastSearch = localStorage.getItem('lastSearch');
     if (lastSearch) {
         city = lastSearch;
         setMapLocation();
@@ -16,10 +24,8 @@ function loadLastSearch() {
     }
 }
 
-locationValue.addEventListener("keyup", function (event) {
-    // Check if the 'Enter' key is pressed (keyCode 13)
-    if (event.key === "Enter") {
-        var locationValue = document.getElementById("locationValue");
+locationValue.addEventListener('keyup', function (event) {
+    if (event.key === 'Enter') {
         city = locationValue.value;
         setMapLocation();
         currentWeatherForecast(city);
@@ -27,126 +33,115 @@ locationValue.addEventListener("keyup", function (event) {
     }
 });
 
+function fetchWeatherData(endpoint) {
+    return fetch(`http://api.weatherapi.com/v1/${endpoint}&key=${weatherApiKey}`)
+        .then(response => response.json());
+}
+
 function currentWeatherForecast(city) {
-    var currentWeatherURL = `http://api.weatherapi.com/v1/current.json?key=0326e1253a344fc8858235651232809&q=${city}`;
+    fetchWeatherData(`current.json?q=${city}`)
+        .then(data => {
+            const weatherData = {
+                currentTemperature: Math.round(data.current.temp_f),
+                precipitation: ` ${data.current.precip_in} in`,
+                humidity: ` ${data.current.humidity}`,
+                windSpeed: ` ${data.current.wind_mph}`,
+                conditionalText: data.current.condition.text,
+                conditionalIcon: `https:${data.current.condition.icon}`,
+            };
 
-    fetch(currentWeatherURL).then(function (response) {
-        console.log(response);
-        return response.json();
+            const date = new Date(data.current.last_updated);
+            const hour = date.getHours();
+            const minute = (date.getMinutes() < 10) ? `0${date.getMinutes()}` : date.getMinutes();
+            const dayOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
+            weatherData.dayOfTheWeek = `${dayOfTheWeek} ${hour}:${minute}`;
 
-    })
-        .then(function (data) {
-            console.log(data);
-            var weatherData = {};
-            weatherData.currentTemperature = Math.round(data.current.temp_f);
-            weatherData.precipitation = data.current.precip_ + " mm";
-            weatherData.humidity = data.current.humidity;
-            weatherData.windSpeed = data.current.wind_mph;
-            weatherData.conditionalText = data.current.condition.text;
-            weatherData.conditionalIcon = data.current.condition.icon;
-            var date = new Date(data.current.last_updated);
-            var hour = date.getHours();
-            console.log(hour);
-            var minute = date.getMinutes();
-            minute = (minute < 10) ? "0" + minute : minute;
-            var dayOfTheWeek = date.getDay();
-            var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"];
-            var dayOfWeek = weeklyArray[dayOfTheWeek];
-            dayOfWeek += " " + hour + ":" + minute;
-            weatherData.dayOfTheWeek = dayOfTheWeek;
             displaySevenDayForecast(weatherData, city);
             sevenDayForecast(city);
             displayCurrentWeatherForecast(weatherData, city);
         });
+}
 
-    function sevenDayForecast(city) {
-        var weeklyForecastURL = `http://api.weatherapi.com/v1/forecast.json?key=0326e1253a344fc8858235651232809&q=${city}&days=7`
-        sevenDayForecastEl.innerHTML = "";
-        fetch(weeklyForecastURL)
-            .then(function (response) {
-                console.log(city);
-                return response.json();
-            })
-            .then(function (data) {
-                console.log(data)
-                data.forecast.forecastday.forEach(day => {
-                    var weatherData = {};
-                    weatherData.currentTemperature = Math.round(day.day.avgtemp_f);
-                    weatherData.conditionalIcon = "https:" + day.day.condition.icon;
-                    var date = new Date(day.date);
-                    var dayOfTheWeek = date.getDay();
-                    weatherData.precipitation = day.day.daily_chance_of_rain + "%";
-                    weatherData.windSpeed = day.day.maxwind_mph;
-                    weatherData.humidity = day.day.avghumidity;
-                    weatherData.conditionalText = day.day.condition.text;
-                    weatherData.maxTemp = Math.round(day.day.maxtemp_f);
-                    weatherData.minTemp = Math.round(day.day.mintemp_f);
-                    var weeklyArray = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-                    weatherData.dayOfWeek = weeklyArray[dayOfTheWeek];
-                    var sevenDayForecastHTML = displaySevenDayForecast(weatherData, city);
-                    sevenDayForecastEl.appendChild(sevenDayForecastHTML);
-                }
-                )
+function sevenDayForecast(city) {
+    fetchWeatherData(`forecast.json?q=${city}&days=7`)
+        .then(data => {
+            sevenDayForecastEl.innerHTML = '';
+            data.forecast.forecastday.forEach(day => {
+                const weatherData = {
+                    currentTemperature: Math.round(day.day.avgtemp_f),
+                    conditionalIcon: `https:${day.day.condition.icon}`,
+                    precipitation: `${day.day.daily_chance_of_rain}%`,
+                    windSpeed: day.day.maxwind_mph,
+                    humidity: day.day.avghumidity,
+                    conditionalText: day.day.condition.text,
+                    maxTemp: Math.round(day.day.maxtemp_f),
+                    minTemp: Math.round(day.day.mintemp_f),
+                    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'][new Date(day.date).getDay()],
+                };
+
+                const sevenDayForecastHTML = displaySevenDayForecast(weatherData, city);
+                sevenDayForecastEl.appendChild(sevenDayForecastHTML);
             });
-    }
-
-    function displaySevenDayForecast(weatherData, city) {
-        var div = document.createElement("div");
-        div.className = "sevenDayForecast";
-
-        var sevenDayForecast = document.createElement("div");
-        sevenDayForecast.className = "sevenDayForecast";
-        sevenDayForecast.textContent = weatherData.dayOfWeek;
-        div.appendChild(sevenDayForecast);
-
-        var image = document.createElement("div");
-        var img = document.createElement("img");
-        img.id = "conditionalIcon";
-        img.src = weatherData.conditionalIcon;
-        image.appendChild(img);
-        div.appendChild(image);
-
-        var minMaxTemp = document.createElement("div");
-        minMaxTemp.className = "minMaxTemp";
-
-        var span1Temperature = document.createElement("span");
-        span1Temperature.className = "temperature";
-        span1Temperature.textContent = weatherData.minTemp + "°";
-        minMaxTemp.appendChild(span1Temperature);
-        var span2Temperature = document.createElement("span");
-        span2Temperature.className = "temperature";
-        span2Temperature.textContent = weatherData.maxTemp + "°";
-        minMaxTemp.appendChild(span2Temperature);
-        div.appendChild(minMaxTemp);
-        div.addEventListener("click", function () {
-        displayCurrentWeatherForecast(weatherData, city);
-
-
         });
-        return div;
-    }
+}
 
-    function displayCurrentWeatherForecast(weatherData, city) {
-        console.log(weatherData);
-        console.log(city);
-        console.log(displayCurrentWeatherForecast);
+function displaySevenDayForecast(weatherData, city) {
+    const div = document.createElement('div');
+    div.className = 'sevenDayForecast';
 
-        currentTempEl.innerHTML = weatherData.currentTemperature;
-        console.log(weatherData.currentTemperature);
-        precipitation.innerHTML = weatherData.precipitation;
-        humidity.innerHTML = weatherData.humidity + "%";
-        windSpeed.innerHTML = weatherData.windspeed + " mph";
-        conditions.innerHTML = weatherData.conditionalText;
-        today.innerHTML = weatherData.dayOfWeek;
-        nameOfCity.innerHTML = city;
-        document.getElementById("conditionalIcon").src = weatherData.conditionalIcon;
-    }
+    const sevenDayForecast = document.createElement('div');
+    sevenDayForecast.className = 'sevenDayForecast';
+    sevenDayForecast.textContent = weatherData.dayOfWeek;
+    div.appendChild(sevenDayForecast);
 
+    const image = document.createElement('div');
+    const img = document.createElement('img');
+    img.id = 'conditionalIcon';
+    img.src = weatherData.conditionalIcon;
+    image.appendChild(img);
+    div.appendChild(image);
 
+    const minMaxTemp = document.createElement('div');
+    minMaxTemp.className = 'minMaxTemp';
+
+    const span1Temperature = document.createElement('span');
+    span1Temperature.className = 'temperature';
+    span1Temperature.textContent = `${weatherData.minTemp}°`;
+    minMaxTemp.appendChild(span1Temperature);
+
+    const span2Temperature = document.createElement('span');
+    span2Temperature.className = 'temperature';
+    span2Temperature.textContent = `${weatherData.maxTemp}°`;
+    minMaxTemp.appendChild(span2Temperature);
+    div.appendChild(minMaxTemp);
+
+    div.addEventListener('click', () => {
+        displayCurrentWeatherForecast(weatherData, city);
+    });
+
+    return div;
+}
+
+function displayCurrentWeatherForecast(weatherData, city) {
+    const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    const d = new Date();
+    const day = weekday[d.getDay()];
+
+    const img = document.getElementById('conditionalIcon');
+    img.src = weatherData.conditionalIcon;
+
+    currentTempEl.innerHTML = weatherData.currentTemperature;
+    precipitation.innerHTML = weatherData.precipitation;
+    humidity.innerHTML = `${weatherData.humidity}%`;
+    windSpeed.innerHTML = `${weatherData.windSpeed} mph`;
+    conditions.innerHTML = weatherData.conditionalText;
+    today.innerHTML = day;
+    nameOfCity.innerHTML = city;
 }
 
 // Map
-var map;
+let map;
+
 window.onload = function () {
     map = L.map('map', {
         layers: MQ.mapLayer(),
@@ -156,19 +151,17 @@ window.onload = function () {
     MQ.trafficLayer().addTo(map);
     loadLastSearch();
 };
+
 function setMapLocation() {
-    // Use a geocoding service (e.g., MapQuest's Geocoding API) to get coordinates
     fetch(`https://www.mapquestapi.com/geocoding/v1/address?key=gUgK3zuO2juaY9exckXhIafpgj38trkj&location=${city}`)
-        .then((response) => response.json())
-        .then((data) => {
-            // Extract latitude and longitude from the response
-            var firstResult = data.results[0].locations[0];
-            var latitude = firstResult.latLng.lat;
-            var longitude = firstResult.latLng.lng;
-            // Set the map's center to the obtained coordinates
+        .then(response => response.json())
+        .then(data => {
+            const firstResult = data.results[0].locations[0];
+            const latitude = firstResult.latLng.lat;
+            const longitude = firstResult.latLng.lng;
             map.setView([latitude, longitude], 16);
         })
-        .catch((error) => {
+        .catch(error => {
             console.error('Error:', error);
         });
 }
