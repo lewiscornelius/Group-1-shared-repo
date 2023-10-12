@@ -55,6 +55,10 @@ html {
     background-color: #3e8ed0;
 }
 
+.navbar-brand {
+    background-color: #3e8ed0;
+}
+
 .footer {
     background-color: #3e8ed0;
     position: relative;
@@ -104,7 +108,7 @@ html {
     flex-basis: calc(20%);
     text-align: center;
     margin-bottom: 10px;
-    background-color: cornflowerblue;
+    background-color: #3e8ed0;
     height: 19rem;
     width: 9rem;
     font-size: larger;
@@ -126,9 +130,10 @@ html {
     top: -9rem;
 }
 
-.currentIcon{
-    top: 8rem;
-    left: 45rem;
+#curIcon{
+    position: relative;
+    left: 47rem;
+    top: 10.7rem;
 }
 
 #currentTemperature{
@@ -139,4 +144,57 @@ html {
     font-weight: bolder;
     color: black;
 
+}
+
+.curTemp {
+    position: relative;
+    left: 47.8rem;
+    top: 10.3rem;
+    font-weight: bolder;
+    color: black;
+    font-size: large;
+}
+
+#currentDaysForecast{
+    font-size:x-large;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: capitalize;
+    color: black;
+    position: absolute;
+}
+
+
+#nameOfCity{
+ position: relative;
+ left: 44rem;
+ bottom: 7.2rem;
+ font-size: larger;
+}
+
+#today{
+position: inherit;
+left: 22.8rem;
+bottom: 15.7rem;
+font-size: 39px;
+}
+
+#conditions {
+    position: relative;
+    left: 44rem;
+    bottom: 5.7rem;
+}
+
+
+#currentWeatherConditions{
+    display: block;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 1rem;
+    font-size: xx-large;
+    text-align: center;
+    font-style: oblique;
+    font-weight: bolder;
+    color: black;
 }
