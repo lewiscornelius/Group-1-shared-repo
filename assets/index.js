@@ -127,7 +127,7 @@ function displayCurrentWeatherForecast(weatherData, city) {
     const d = new Date();
     const day = weekday[d.getDay()];
 
-    const img = document.getElementById('conditionalIcon');
+    const img = document.getElementById('curIcon');
     img.src = weatherData.conditionalIcon;
 
     currentTempEl.innerHTML = weatherData.currentTemperature;
