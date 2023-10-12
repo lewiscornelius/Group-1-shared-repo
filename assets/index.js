@@ -34,7 +34,7 @@ locationValue.addEventListener('keyup', function (event) {
 });
 
 function fetchWeatherData(endpoint) {
-    return fetch(`http://api.weatherapi.com/v1/${endpoint}&key=${weatherApiKey}`)
+    return fetch(`https://api.weatherapi.com/v1/${endpoint}&key=${weatherApiKey}`)
         .then(response => response.json());
 }
 
