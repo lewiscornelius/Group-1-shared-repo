@@ -165,4 +165,3 @@ function setMapLocation() {
             console.error('Error:', error);
         });
 }
-
